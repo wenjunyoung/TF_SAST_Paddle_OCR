@@ -1,7 +1,11 @@
+## TensorFlow SAST 
+
+The repo is the tensorflow version of Paddle-OCR. At present, it only includes the function of text detection. Other functions such as text recognition will come soon.
+
 ### 快速安装
 
-- tensorflow==2.5
-- python==3.7
+- Tensorflow==2.5
+- Python==3.7
 
 ```
 # 创建虚拟环境
@@ -13,7 +17,7 @@ pip install --upgrade pip
 pip install tensorflow==2.5.0
 
 # 克隆项目
-git clone git@gitdojo.gz.cvte.cn:inter/yangwenjun/tf_paddle_ocr.git
+git clone https://github.com/wenjunyoung/TF_SAST_Paddle_OCR.git
 
 # 安装必要的工具包
 cd tf_paddle_ocr
@@ -25,7 +29,7 @@ pip install -r requirements.txt
 
 ### 注意！！！
 
-使用本项目仓库之前，必须将Tensorflow的默认通道顺序改为"channels_first"，请遵循以下操作：
+使用本项目仓库之前，必须将Tensorflow的image_data_format默认通道顺序改为"channels_first"，请遵循以下操作：
 
 ```
 # 查看通道顺顺序
