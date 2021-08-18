@@ -73,3 +73,13 @@ python run.py -c config/det/det_r50_vd_sast_tf_icdar15.yml
 python run.py -c configs/det/det_r50_vd_sast_tf_icdar15.yml  -o Global.checkpoints=./your/trained/model
 ```
 
+### 测试
+
+待更新！
+
+### 部署
+
+使用OpenVINO部署于Intel CPU
+
+待更新！
+
