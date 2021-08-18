@@ -1,0 +1,25 @@
+
+©À©¤©¤ ctw1500
+©¦   ©À©¤©¤ annotations
+©¦   ©À©¤©¤ imgs
+©¦   ©À©¤©¤ instances_test.json
+©¦   ©¸©¤©¤ instances_training.json
+©À©¤©¤ icdar2015
+©¦   ©À©¤©¤ imgs
+©¦   ©À©¤©¤ instances_test.json
+©¦   ©¸©¤©¤ instances_training.json
+©À©¤©¤ icdar2017
+©¦   ©À©¤©¤ imgs
+©¦   ©À©¤©¤ instances_training.json
+©¦   ©¸©¤©¤ instances_val.json
+©À©¤©¤ synthtext
+©¦   ©À©¤©¤ imgs
+©¦   ©¸©¤©¤ instances_training.lmdb
+©À©¤©¤ textocr
+©¦   ©À©¤©¤ train
+©¦   ©À©¤©¤ instances_training.json
+©¦   ©¸©¤©¤ instances_val.json
+©À©¤©¤ totaltext
+©¦   ©À©¤©¤ imgs
+©¦   ©À©¤©¤ instances_test.json
+©¦   ©¸©¤©¤ instances_training.json
