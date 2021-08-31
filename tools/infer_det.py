@@ -29,14 +29,15 @@ os.environ["FLAGS_allocator_strategy"] = 'auto_growth'
 
 import cv2
 import json
-import paddle
+import tensorflow as tf
 
-from ppocr.data import create_operators, transform
-from ppocr.modeling.architectures import build_model
-from ppocr.postprocess import build_post_process
-from ppocr.utils.save_load import init_model
-from ppocr.utils.utility import get_image_file_list
+from data_lib.data.imaug import transform, create_operators
+from model.modeling.architectures import tf_build_model #
+from model.postprocess import build_post_process  #
+from model.utils.save_load import tf_init_model   # 
+from model.utils.utility import get_image_file_list
 import tools.program as program
+
 
 
 def draw_det_res(dt_boxes, config, img, img_name):
@@ -59,9 +60,9 @@ def main():
     global_config = config['Global']
 
     # build model
-    model = build_model(config['Architecture'])
+    model = tf_build_model(config['Architecture'])
 
-    init_model(config, model, logger)
+    tf_init_model(config, model, logger)
 
     # build post process
     post_process_class = build_post_process(config['PostProcess'])
@@ -82,7 +83,7 @@ def main():
     if not os.path.exists(os.path.dirname(save_res_path)):
         os.makedirs(os.path.dirname(save_res_path))
 
-    model.eval()
+    # model.eval()
     with open(save_res_path, "wb") as fout:
         for file in get_image_file_list(config['Global']['infer_img']):
             logger.info("infer_img: {}".format(file))
@@ -93,8 +94,9 @@ def main():
 
             images = np.expand_dims(batch[0], axis=0)
             shape_list = np.expand_dims(batch[1], axis=0)
-            images = paddle.to_tensor(images)
-            preds = model(images)
+            images = tf.convert_to_tensor(images)
+            preds = model(images, training=False)
+            
             post_result = post_process_class(preds, shape_list)
             boxes = post_result[0]['points']
             # write result
@@ -111,5 +113,5 @@ def main():
 
 
 if __name__ == '__main__':
-    config, device, logger, vdl_writer = program.preprocess()
+    config, device, logger, vdl_writer = program.tf_preprocess()
     main()

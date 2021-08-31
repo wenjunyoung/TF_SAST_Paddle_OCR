@@ -80,7 +80,7 @@ class ConvBNLayer(nn.Layer):
         return y
 '''
 
-class tf_ConvBNLayer(tf.keras.layers.Layer):
+class tf_ConvBNLayer(tf.keras.Model):
     def __init__(
             self,
             in_channels,
@@ -201,7 +201,7 @@ class BottleneckBlock(nn.Layer):
         return y
 '''
 
-class tf_BottleneckBlock(tf.keras.layers.Layer):
+class tf_BottleneckBlock(tf.keras.Model):
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -313,7 +313,7 @@ class BasicBlock(nn.Layer):
         return y
 '''
 
-class tf_BasicBlock(tf.keras.layers.Layer):
+class tf_BasicBlock(tf.keras.Model):
     def __init__(self,
                  in_channels,
                  out_channels,

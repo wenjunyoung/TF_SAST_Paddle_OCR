@@ -24,7 +24,7 @@ import six
 # import paddle
 import tensorflow as tf
 
-__all__ = ['init_model', 'save_model', 'load_dygraph_pretrain']
+__all__ = ['tf_init_model', 'tf_save_model']
 
 
 def _mkdir_if_not_exist(path, logger):
@@ -138,14 +138,14 @@ def tf_init_model(config, model, logger, optimizer=None, lr_scheduler=None):
         # assert os.path.exists(checkpoints_prefix + "model_latest-800.index"), "Given dir {} checkpoint not exist.".format(checkpoints_prefix)
 
         # 载入模型
-        checkpoint = tf.train.Checkpoint(tf_model=model, tf_optimizer=optimizer)
+        checkpoint = tf.train.Checkpoint(tf_model=model)  #, tf_optimizer=optimizer)
         # checkpoint.restore(tf.train.latest_checkpoint(checkpoints))
         '''
         save_path_with_prefix_and_index 是之前保存的文件的目录 + 前缀 + 编号。
         例如，调用 checkpoint.restore('./save/model.ckpt-1') 就可以载入前缀为 model.ckpt ，序号为 1 的文件来恢复模型
         '''
         # checkpoint.restore(checkpoints_prefix+'model_latest' + '-310') # save_path_with_prefix_and_index
-        checkpoint.restore(tf.train.latest_checkpoint(checkpoints_prefix))
+        checkpoint.restore(tf.train.latest_checkpoint(checkpoints_prefix)).expect_partial()
 
         # 保存模型的状态信息，包括best model
         if os.path.exists(checkpoints_prefix + '.states'):
@@ -159,36 +159,12 @@ def tf_init_model(config, model, logger, optimizer=None, lr_scheduler=None):
 
     elif pretrained_model:
         # model = tf.saved_model.load(pretrained_model)
-        model = tf.keras.models.load_model(pretrained_model, compile=False)
+        model = tf.keras.models.load_model(pretrained_model)
         logger.info("load pretrained model from {}".format(pretrained_model))
     else:
         logger.info('train from scratch')
     return best_model_dict
 
-'''
-def save_model(model,
-               optimizer,
-               model_path,
-               logger,
-               is_best=False,
-               prefix='ppocr',
-               **kwargs):
-    """
-    save model to the target path
-    """
-    _mkdir_if_not_exist(model_path, logger)
-    model_prefix = os.path.join(model_path, prefix)
-    paddle.save(model.state_dict(), model_prefix + '.pdparams')
-    paddle.save(optimizer.state_dict(), model_prefix + '.pdopt')
-
-    # save metric and config
-    with open(model_prefix + '.states', 'wb') as f:
-        pickle.dump(kwargs, f, protocol=2)
-    if is_best:
-        logger.info('save best model is to {}'.format(model_prefix))
-    else:
-        logger.info("save model in {}".format(model_prefix))
-'''
 
 def tf_save_model(model,
                optimizer,

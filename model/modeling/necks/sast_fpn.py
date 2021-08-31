@@ -63,7 +63,7 @@ class ConvBNLayer(nn.Layer):
         return x
 '''
 
-class tf_ConvBNLayer(tf.keras.layers.Layer):
+class tf_ConvBNLayer(tf.keras.Model):
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -152,7 +152,7 @@ class DeConvBNLayer(nn.Layer):
         return x
 '''
 
-class tf_DeConvBNLayer(tf.keras.layers.Layer):
+class tf_DeConvBNLayer(tf.keras.Model):
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -259,7 +259,7 @@ class FPN_Up_Fusion(nn.Layer):
 
 '''
 
-class tf_FPN_Up_Fusion(tf.keras.layers.Layer):
+class tf_FPN_Up_Fusion(tf.keras.Model):
     def __init__(self, in_channels, ):
         super(tf_FPN_Up_Fusion, self).__init__()
         in_channels = in_channels[::-1]
@@ -357,7 +357,7 @@ class FPN_Down_Fusion(nn.Layer):
         return g2
 '''
 
-class tf_FPN_Down_Fusion(tf.keras.layers.Layer):
+class tf_FPN_Down_Fusion(tf.keras.Model):
     def __init__(self, in_channels, ):
         super(tf_FPN_Down_Fusion, self).__init__()
         out_channels = [32, 64, 128]
@@ -470,7 +470,7 @@ class Cross_Attention(nn.Layer):
         return f_attn
 '''
 
-class tf_Cross_Attention(tf.keras.layers.Layer):
+class tf_Cross_Attention(tf.keras.Model):
     def __init__(self, in_channels, ):
         super(tf_Cross_Attention, self).__init__()
 
@@ -492,6 +492,7 @@ class tf_Cross_Attention(tf.keras.layers.Layer):
     def _cal_fweight(self, f, shape):
         f_theta, f_phi, f_g = f
         #flatten
+        
         f_theta = tf.transpose(f_theta, [0, 2, 3, 1])
         f_theta = tf.reshape(f_theta, [shape[0] * shape[1], shape[2], 128])
         f_phi = tf.transpose(f_phi, [0, 2, 3, 1])
@@ -516,9 +517,10 @@ class tf_Cross_Attention(tf.keras.layers.Layer):
     # @tf.function
     def call(self, f_common):
         f_shape = tf.shape(f_common)
-        # print('f_shape: ', f_shape)
+        
 
         f_theta = self.theta_conv(f_common)
+        
         f_phi = self.phi_conv(f_common)
         f_g = self.g_conv(f_common)
 
@@ -597,6 +599,7 @@ class tf_SASTFPN(tf.keras.Model):
 
         #fusion
         f_common = f_down + f_up
+        
         f_common = self.relu(f_common)
 
         if self.with_cab:

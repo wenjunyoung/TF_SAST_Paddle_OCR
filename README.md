@@ -62,7 +62,6 @@ $ nano ~/.keras/keras.json
 
 ```
 python run.py -c config/det/det_r50_vd_sast_tf_icdar15.yml 
-# 预训练模型可以加上 -o Global.pretrain_weights=./your/pretrain/model 
 ```
 
 **从checkpoint恢复训练**
@@ -70,12 +69,29 @@ python run.py -c config/det/det_r50_vd_sast_tf_icdar15.yml
 如果训练程序中断，如果希望加载训练中断的模型从而恢复训练，可以通过指定Global.checkpoints指定要加载的模型路径：
 
 ```
-python run.py -c configs/det/det_r50_vd_sast_tf_icdar15.yml  -o Global.checkpoints=./your/trained/model
+python run.py -c config/det/det_r50_vd_sast_tf_icdar15.yml -o Global.checkpoints=./your/trained/model
 ```
 
 ### 测试
 
-待更新！
+在图像上测试检测结果
+
+For example:
+
+```
+python tools/infer_det.py -c config/det/det_r50_vd_sast_tf_icdar15.yml -o Global.infer_img="./your/image.jpg" Global.checkpoints=/your/checkpoints/
+
+# 
+python tools/infer_det.py -c config/det/det_r50_vd_sast_tf_icdar15.yml -o Global.infer_img=./assets/doc/imgs_en/img_10.jpg Global.checkpoints=./output/sast_r50_vd_ic15_tf/iter_epoch_1055/
+```
+
+### 评估
+
+-c：配置文件          checkpoints：检查点文件
+
+```
+python tools/eval.py -c config/det/det_r50_vd_sast_tf_icdar15.yml -o Global.checkpoints= /your/checkpoint/
+```
 
 ### 部署
 

@@ -65,7 +65,7 @@ class ConvBNLayer(nn.Layer):
 '''
 
 
-class tf_ConvBNLayer(tf.keras.layers.Layer):
+class tf_ConvBNLayer(tf.keras.Model):
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -141,7 +141,7 @@ class SAST_Header1(nn.Layer):
 '''
 
 
-class tf_SAST_Header1(tf.keras.layers.Layer):
+class tf_SAST_Header1(tf.keras.Model):
     def __init__(self, in_channels, **kwargs):
         super(tf_SAST_Header1, self).__init__()
         out_channels = [64, 64, 128]
@@ -193,7 +193,7 @@ class SAST_Header2(nn.Layer):
 '''
 
 
-class tf_SAST_Header2(tf.keras.layers.Layer):
+class tf_SAST_Header2(tf.keras.Model):
     def __init__(self, in_channels,  **kwargs):
         super(tf_SAST_Header2, self).__init__()
         out_channels = [64, 64, 128]

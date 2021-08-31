@@ -571,11 +571,8 @@ class tf_SASTPostProcess(object):
         """
         # restore quad
         scores, quads, xy_text = self.restore_quad(tcl_map, tcl_map_thresh, tvo_map)
-        # print("\n\n\n quads shape before :", quads.shape)                        
-        #print("\n\n\n scores shape before :", scores.shape) 
         dets = np.hstack((quads, scores)).astype(np.float32, copy=False)
         
-        #print("\n\n\n dets shape:", dets.shape)
         dets = self.nms(dets)
         
         # print("dets:", dets)
@@ -680,34 +677,18 @@ class tf_SASTPostProcess(object):
         tvo_list = outs_dict['f_tvo']
         tco_list = outs_dict['f_tco']
 
-        # score_list = tf.stop_gradient(score_list)
-        # border_list = tf.stop_gradient(border_list)
-        # tvo_list = tf.stop_gradient(tvo_list)
-        # tco_list = tf.stop_gradient(tco_list)
-
-        #print("\n\n score_list shape:", score_list)
-        #print("score_list type:", type(score_list))
         if isinstance(score_list, tf.Tensor):
             score_list = score_list.numpy()
             border_list = border_list.numpy()
             tvo_list = tvo_list.numpy()
             tco_list = tco_list.numpy()
-            print("========>>> .numpy()")
-        #print("score_list:", score_list)
-        #print("score_list type:", type(score_list))
 
         img_num = len(shape_list)
-        # print("img_num:", img_num)
         poly_lists = []
         for ino in range(img_num):
-            #print("ino :", ino)
-            # print("score_list[ino] :", score_list[ino])
-            # print("shape_list[ino] :", shape_list[ino])
             p_score = score_list[ino].transpose((1, 2, 0))
-            print("p_score :", p_score.shape)
             p_border = border_list[ino].transpose((1, 2, 0))
             p_tvo = tvo_list[ino].transpose((1, 2, 0))
-            print("p_tvo :", p_tvo.shape)
             p_tco = tco_list[ino].transpose((1, 2, 0))
             src_h, src_w, ratio_h, ratio_w = shape_list[ino]
 
@@ -723,7 +704,7 @@ class tf_SASTPostProcess(object):
                 shrink_ratio_of_width=self.shrink_ratio_of_width,
                 tcl_map_thresh=self.tcl_map_thresh,
                 offset_expand=self.expand_scale)
-            # print("poly_list :", poly_list)
+
             poly_lists.append({'points': np.array(poly_list)})
 
         return poly_lists

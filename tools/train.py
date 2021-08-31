@@ -30,7 +30,7 @@ import yaml
 # paddle.seed(2)
 
 # from ppocr.data import build_dataloader # 
-from data_lib.data import tf_build_dataloader # 
+from model.data import tf_build_dataloader # 
 
 # from ppocr.modeling.architectures import build_model #
 from model.modeling.architectures import tf_build_model #
