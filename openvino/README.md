@@ -11,7 +11,7 @@
    Tips：电脑记得连接摄像头~
 
    ```
-   python --xml /path/to/model/.xml  --bin /path/to/model/.bin
+   python tf_openvino.py --xml /path/to/model/.xml  --bin /path/to/model/.bin
    ```
 
    注意：本代码还没经过debug，可能存在一些bug！！！
